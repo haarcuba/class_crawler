@@ -20,7 +20,12 @@ class Links:
     def __init__(self, html):
         parser = _LinksParser()
         parser.feed(html)
-        self._links = parser.links
+        links = []
+        for link in parser.links:
+            if link in links:
+                continue
+            links.append(link)
+        self._links = links
 
     def all(self):
         return self._links

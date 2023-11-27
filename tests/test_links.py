@@ -53,8 +53,8 @@ def test_links_from_wikipedia_article():
     EXPECTED = [
         "#cite_note-IreneTCR-1",
         "//en.wikipedia.org/wiki/Wikipedia:Contact_us",
-        "http://abclocal.go.com/wpvi/story?section=local&amp;id=3353400",
-        "/w/index.php?title=Hurricane_Irene_(2005)&amp;action=edit&amp;section=5",
+        "http://abclocal.go.com/wpvi/story?section=local&id=3353400",
+        "/w/index.php?title=Hurricane_Irene_(2005)&action=edit&section=5",
         "/wiki/1852_Atlantic_hurricane_season#Hurricane_Five",
         ]
 
