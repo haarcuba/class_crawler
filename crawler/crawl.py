@@ -1,6 +1,6 @@
 class Crawl:
     def __init__(self, root_url):
-        pass
+        self._root_url = root_url
 
     def web_of_links(self):
-        pass
+        return [ [self._root_url] ]
