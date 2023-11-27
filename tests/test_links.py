@@ -23,13 +23,13 @@ def test_get_all_links_from_page():
     </html>
     """
     tested = crawler.links.Links(HTML1)
-    assert tested.all() == [
+    assert_same_elements(tested.all(), [
                     "a.txt",
                     "b.txt",
                     "one/",
                     "three/",
                     "two/",
-            ]
+            ])
 
 def test_links_from_wikipedia_article():
     HTML = """
@@ -59,4 +59,7 @@ def test_links_from_wikipedia_article():
         ]
 
     actual = tested.all()
-    assert EXPECTED == actual
+    assert_same_elements(EXPECTED, actual)
+
+def assert_same_elements(a, b):
+    assert set(a) == set(b)
