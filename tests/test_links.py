@@ -1,5 +1,25 @@
 import crawler.links
 
+def test_no_links():
+    HTML1 = """
+    <!DOCTYPE HTML>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <title>Directory listing for /</title>
+    </head>
+    <body>
+    <h1>Directory listing for /</h1>
+    <hr>
+    <ul>
+    </ul>
+    <hr>
+    </body>
+    </html>
+    """
+    tested = crawler.links.Links(HTML1)
+    assert set() == tested.all()
+
 def test_get_all_links_from_page():
     HTML1 = """
     <!DOCTYPE HTML>
