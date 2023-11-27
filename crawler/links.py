@@ -18,8 +18,9 @@ class _LinksParser(html.parser.HTMLParser):
 
 class Links:
     def __init__(self, html):
-        self._parser = _LinksParser()
-        self._parser.feed(html)
+        parser = _LinksParser()
+        parser.feed(html)
+        self._links = parser.links
 
     def all(self):
-        return self._parser.links
+        return self._links
