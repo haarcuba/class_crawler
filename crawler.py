@@ -1,12 +1,13 @@
 #This is Raviv's and Noam's project :)
 
-from html.parser import HTMLParser
+import html.parser
 import argparse
 import yaml
-from re import search
-from urllib.request import urlopen, Request
-from urllib.parse import urljoin
+import re
+import urllib.request
+import urllib.parse
 import sys
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -16,7 +17,7 @@ if __name__ == "__main__":
     arguments = parser.parse_args()
 
 
-class MyHTMLParser(HTMLParser):
+class MyHTMLParser(html.parser.HTMLParser):
     def __init__(self):
         super().__init__()
         self.links = []
@@ -30,7 +31,7 @@ class MyHTMLParser(HTMLParser):
             if name != 'href':
                 continue
 
-            if search(arguments.ignore_regex, value):
+            if re.search(arguments.ignore_regex, value):
                 continue
 
             if not value in self.links:
@@ -39,8 +40,10 @@ class MyHTMLParser(HTMLParser):
 
 def scan_urls(url):
     HTMLparser = MyHTMLParser()
-    HTMLparser.feed(str(urlopen(url).read()))
-    return [urljoin(url, link) for link in HTMLparser.links]
+    reader = urllib.request.urlopen(url)
+    content = reader.read()
+    HTMLparser.feed(str(content))
+    return [urllib.parse.urljoin(url, link) for link in HTMLparser.links]
 
 def get_web_of_links():
     levels = [{"level":i, "links":[]} for i in range(arguments.depth+1)]
@@ -52,4 +55,5 @@ def get_web_of_links():
     return result
 
 if __name__ == "__main__":
-    yaml.dump(get_web_of_links(), stream=sys.stdout)
+    web = get_web_of_links()
+    yaml.dump(web, stream=sys.stdout)
