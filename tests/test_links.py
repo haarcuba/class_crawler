@@ -30,3 +30,33 @@ def test_get_all_links_from_page():
                     "three/",
                     "two/",
             ]
+
+def test_links_from_wikipedia_article():
+    HTML = """
+    <!DOCTYPE HTML>
+    <html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <title>Directory listing for /</title>
+    </head>
+    <body>
+        <a href="#cite_note-IreneTCR-1">
+        <a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">
+        <a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us">
+        <a rel="nofollow" class="external text" href="http://abclocal.go.com/wpvi/story?section=local&amp;id=3353400">
+        <a href="/w/index.php?title=Hurricane_Irene_(2005)&amp;action=edit&amp;section=5" title="Edit section: External links">
+        <a href="/wiki/1852_Atlantic_hurricane_season#Hurricane_Five" title="1852 Atlantic hurricane season">
+    </body>
+    </html>
+    """
+    tested = crawler.links.Links(HTML)
+    EXPECTED = [
+        "#cite_note-IreneTCR-1",
+        "//en.wikipedia.org/wiki/Wikipedia:Contact_us",
+        "http://abclocal.go.com/wpvi/story?section=local&amp;id=3353400",
+        "/w/index.php?title=Hurricane_Irene_(2005)&amp;action=edit&amp;section=5",
+        "/wiki/1852_Atlantic_hurricane_season#Hurricane_Five",
+        ]
+
+    actual = tested.all()
+    assert EXPECTED == actual
