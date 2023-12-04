@@ -21,3 +21,15 @@ def test_depth_2_link_tree():
                 ['http://localhost:9999'],
                 ['link1', 'link2'],
            ]
+
+def test_edge_case__depth_2_loop():
+    with Scenario() as s:
+        s.find_links('root') >> ['link1', 'link2']
+        s.find_links('link1') >> []
+        s.find_links('link2') >> ['root']
+
+        tested = crawler.crawl.Crawl('root', find_links=Fake('find_links'))
+        assert tested.web_of_links() == [
+                ['root'],
+                ['link1', 'link2'],
+           ]
