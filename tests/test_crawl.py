@@ -5,7 +5,7 @@ def test_no_links__return_only_root_url():
     with Scenario() as s:
         s.find_links('root') >> []
 
-        tested = crawler.crawl.Crawl('root', find_links=Fake('find_links'))
+        tested = crawler.crawl.Crawl('root', find_urls=Fake('find_links'))
         assert tested.web_of_links() == [
                 ['root'],
            ]
@@ -16,7 +16,7 @@ def test_depth_2_link_tree():
         s.find_links('link1') >> []
         s.find_links('link2') >> []
 
-        tested = crawler.crawl.Crawl('root', find_links=Fake('find_links'))
+        tested = crawler.crawl.Crawl('root', find_urls=Fake('find_links'))
         assert tested.web_of_links() == [
                 ['root'],
                 ['link1', 'link2'],
@@ -28,7 +28,7 @@ def test_edge_case__depth_2_loop():
         s.find_links('link1') >> []
         s.find_links('link2') >> ['root']
 
-        tested = crawler.crawl.Crawl('root', find_links=Fake('find_links'))
+        tested = crawler.crawl.Crawl('root', find_urls=Fake('find_links'))
         assert tested.web_of_links() == [
                 ['root'],
                 ['link1', 'link2'],
@@ -44,7 +44,7 @@ def test_depth_4_link_tree():
         s.find_links('link2.1') >> []
         s.find_links('link1.2.1') >> []
 
-        tested = crawler.crawl.Crawl('root', find_links=Fake('find_links'))
+        tested = crawler.crawl.Crawl('root', find_urls=Fake('find_links'))
         assert tested.web_of_links() == [
                 ['root'],
                 ['link1', 'link2'],

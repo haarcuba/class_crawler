@@ -14,8 +14,8 @@ class _Link:
         return self.url == other.url
 
 class Crawl:
-    def __init__(self, root_url, *, find_links):
-        self._find_links = find_links
+    def __init__(self, root_url, *, find_urls):
+        self._find_urls = find_urls
         self._seen = set()
         self._result = collections.defaultdict(list)
         root_link = _Link(root_url, depth=0)
@@ -29,15 +29,18 @@ class Crawl:
             self._add_links_from(link)
 
     def _add_links_from(self, link):
-        urls = self._find_links(link.url)
-        links = [_Link(url, link.depth + 1) for url in urls]
+        links = self._find_links(link)
         self._seen.add(link)
-        links = [link_ for link_ in links if link_ not in self._seen]
-        if len(links) == 0:
+        new_links = [link_ for link_ in links if link_ not in self._seen]
+        if len(new_links) == 0:
             return
 
-        self._result[link.depth + 1] += links
-        self._to_explore += links
+        self._result[link.depth + 1] += new_links
+        self._to_explore += new_links
+
+    def _find_links(self, link):
+        urls = self._find_urls(link.url)
+        return [_Link(url, link.depth + 1) for url in urls]
 
     def web_of_links(self):
         result = []
