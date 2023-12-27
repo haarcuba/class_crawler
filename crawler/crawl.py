@@ -15,6 +15,7 @@ class _Link:
 
 class Crawl:
     def __init__(self, root_url, *, depth=10, find_urls):
+        self._depth = depth
         self._find_urls = find_urls
         self._seen = set()
         self._result = collections.defaultdict(list)
@@ -26,6 +27,8 @@ class Crawl:
         self._to_explore = [root_link]
         while len(self._to_explore) > 0:
             link = self._to_explore.pop(0)
+            if link.depth >= self._depth:
+                continue
             self._add_links_from(link)
 
     def _add_links_from(self, link):
