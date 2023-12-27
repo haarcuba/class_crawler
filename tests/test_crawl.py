@@ -51,3 +51,16 @@ def test_depth_4_link_tree():
                 ['link1.1', 'link1.2', 'link2.1'],
                 ['link1.2.1',]
            ]
+
+def test_depth_4_link_tree__but_crawler_depth_is_3():
+    with Scenario() as s:
+        s.find_urls('root') >> ['link1', 'link2']
+        s.find_urls('link1') >> ['link1.1', 'link1.2']
+        s.find_urls('link2') >> ['link2.1']
+
+        tested = crawler.crawl.Crawl('root', depth=3, find_urls=Fake('find_urls'))
+        assert tested.web_of_links() == [
+                ['root'],
+                ['link1', 'link2'],
+                ['link1.1', 'link1.2', 'link2.1'],
+           ]

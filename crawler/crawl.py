@@ -14,7 +14,7 @@ class _Link:
         return self.url == other.url
 
 class Crawl:
-    def __init__(self, root_url, *, find_urls):
+    def __init__(self, root_url, *, depth=10, find_urls):
         self._find_urls = find_urls
         self._seen = set()
         self._result = collections.defaultdict(list)
