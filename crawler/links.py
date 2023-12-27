@@ -22,5 +22,5 @@ class Links:
         parser.feed(html)
         self._links = set(parser.links)
 
-    def all(self):
+    def all(self) -> set:
         return self._links
