@@ -34,7 +34,7 @@ class Crawl:
             self._add_links_from(link)
 
     def _add_links_from(self, link):
-        links = self._find_links(link)
+        links = self._get_urls(link)
         self._seen.add(link)
         new_links = list(filter(self._should_visit, links))
         if len(new_links) == 0:
@@ -52,7 +52,7 @@ class Crawl:
 
         return True
 
-    def _find_links(self, link):
+    def _get_urls(self, link):
         urls = self._find_urls(link.url)
         return [_Link(url, link.depth + 1) for url in urls]
 
