@@ -1,5 +1,6 @@
 import dataclasses
 import collections
+import re
 
 
 @dataclasses.dataclass
@@ -14,7 +15,8 @@ class _Link:
         return self.url == other.url
 
 class Crawl:
-    def __init__(self, root_url, *, ignore_pattern='^$', depth=10, find_urls):
+    def __init__(self, root_url, *, ignore_pattern: str='^$', depth=10, find_urls):
+        self._ignore_pattern = re.compile(ignore_pattern)
         self._depth = depth
         self._find_urls = find_urls
         self._seen = set()
@@ -34,12 +36,21 @@ class Crawl:
     def _add_links_from(self, link):
         links = self._find_links(link)
         self._seen.add(link)
-        new_links = [link_ for link_ in links if link_ not in self._seen]
+        new_links = list(filter(self._should_visit, links))
         if len(new_links) == 0:
             return
 
         self._result[link.depth + 1] += new_links
         self._to_explore += new_links
+
+    def _should_visit(self, link):
+        if link in self._seen:
+            return False
+        ignore = self._ignore_pattern.search(link.url)
+        if ignore is not None:
+            return False
+
+        return True
 
     def _find_links(self, link):
         urls = self._find_urls(link.url)
