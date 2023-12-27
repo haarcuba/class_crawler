@@ -18,11 +18,11 @@ class Crawl:
         self._find_urls = find_urls
         self._seen = set()
         self._result = collections.defaultdict(list)
-        root_link = _Link(root_url, depth=0)
+        root_link = _Link(root_url, depth=1)
         self._go(root_link)
 
     def _go(self, root_link):
-        self._result[0] = [root_link]
+        self._result[root_link.depth] = [root_link]
         self._to_explore = [root_link]
         while len(self._to_explore) > 0:
             link = self._to_explore.pop(0)
@@ -44,7 +44,7 @@ class Crawl:
 
     def web_of_links(self):
         result = []
-        for depth in range(len(self._result)):
+        for depth in range(1, len(self._result) + 1):
             links = self._result[depth]
             urls = [link.url for link in links]
             result.append(urls)
