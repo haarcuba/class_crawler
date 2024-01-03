@@ -1,15 +1,17 @@
 import pytest
 import subprocess
+import signal
 import crawler.crawl
 import crawler.find_urls
+import random
 
 
 @pytest.fixture
 def file_server():
-    PORT = 9999
-    process = subprocess.Popen(['python', 'tests/files_http_server.py', '-p', str(PORT), '-d', 'tests/example'])
+    PORT = random.randint(10000, 65000)
+    process = subprocess.Popen(['python', 'tests/e2e/files_http_server.py', '-p', str(PORT), '-d', 'tests/e2e/example'])
     yield f'http://localhost:{PORT}'
-    process.kill()
+    process.send_signal(signal.SIGINT)
 
 
 def test_end_2_end__crawler_actually_works(file_server):
