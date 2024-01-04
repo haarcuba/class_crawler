@@ -9,7 +9,10 @@ import random
 @pytest.fixture
 def file_server():
     PORT = random.randint(10000, 65000)
-    process = subprocess.Popen(['python', 'tests/e2e/files_http_server.py', '-p', str(PORT), '-d', 'tests/e2e/example'])
+    SILENCE_OUTPUT = {'stdout': subprocess.DEVNULL, 'stderr': subprocess.DEVNULL}
+    process = subprocess.Popen(['python', 'tests/e2e/files_http_server.py', '-p', str(PORT), '-d', 'tests/e2e/example'], **SILENCE_OUTPUT)
+    LET_SERVER_START = 0.1
+    time.sleep(LET_SERVER_START)
     yield f'http://localhost:{PORT}'
     process.send_signal(signal.SIGINT)
 
