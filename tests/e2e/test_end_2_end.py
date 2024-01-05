@@ -4,6 +4,7 @@ import signal
 import crawler.crawl
 import crawler.find_urls
 import random
+import time
 
 
 @pytest.fixture
