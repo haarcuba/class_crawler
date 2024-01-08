@@ -1,6 +1,5 @@
 import pytest
 import subprocess
-import signal
 import crawler.crawl
 import crawler.find_urls
 import random
@@ -15,7 +14,7 @@ def file_server():
     LET_SERVER_START = 0.1
     time.sleep(LET_SERVER_START)
     yield f'http://localhost:{PORT}'
-    process.send_signal(signal.SIGINT)
+    process.terminate()
 
 
 def test_end_2_end__crawler_actually_works(file_server):
