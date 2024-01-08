@@ -16,4 +16,5 @@ if __name__ == "__main__":
     parser.add_argument('--directory', '-d', type=str, default='.', help="Specify the directory from which to serve files.")
     arguments = parser.parse_args()
 
+    print(f'running file server on port: {arguments.port}')
     run_server(arguments.directory, arguments.port)
