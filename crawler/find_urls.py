@@ -1,6 +1,6 @@
 import urllib.request
 import urllib.parse
-import links
+import crawler.links
 
 
 def _url_parser(url):
@@ -10,7 +10,7 @@ def _url_parser(url):
 
 
 class FindUrls:
-    def __init__(self, parser=links.Links):
+    def __init__(self, parser=crawler.links.Links):
         self.parser = parser
 
     def __call__(self, url):
