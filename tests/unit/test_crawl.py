@@ -1,5 +1,5 @@
 import crawler.crawl
-from testix import *
+from desdix import *
 
 def test_no_links__return_only_root_url():
     with Scenario() as s:

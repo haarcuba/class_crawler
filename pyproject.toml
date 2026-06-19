@@ -1,18 +1,21 @@
 [project]
 name = "class-crawler"
 version = "0.1.0"
-requires-python = ">=3.10"
+requires-python = ">=3.13"
 dependencies = []
 
 [dependency-groups]
 dev = [
+    "desdix",
     "ptpython>=3.0.32",
     "pytest",
-    "testix",
 ]
 
 [tool.hatch.build.targets.wheel]
 packages = ["crawler"]
+
+[tool.uv.sources]
+desdix = { path = "deps/desdix-0.1.0-py3-none-any.whl" }
 
 [build-system]
 requires = ["hatchling"]
