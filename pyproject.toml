@@ -1,0 +1,19 @@
+[project]
+name = "class-crawler"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ptpython>=3.0.32",
+    "pytest",
+    "testix",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["crawler"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -1,4 +1,5 @@
 import dataclasses
+import logging
 import collections
 import re
 
@@ -34,6 +35,7 @@ class Crawl:
             self._add_links_from(link)
 
     def _add_links_from(self, link):
+        logging.info(f'crawling: {link.url} at depth: {link.depth}')
         links = self._get_urls(link)
         self._seen.add(link)
         new_links = list(filter(self._should_visit, links))
